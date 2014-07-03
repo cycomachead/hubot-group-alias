@@ -1,12 +1,13 @@
 {
   "name": "hubot-group-alias",
-  "description": "An example script package for Hubot",
+  "description": "Hubot page for user @mention aliases",
   "version": "1.0.0",
-  "author": "Tom Bell <tomb@tomb.io>",
+  "author": "Michael Ball <cycomachead@gmail.com>",
   "license": "MIT",
   "keywords": [
     "hubot",
-    "hubot-scripts"
+    "hubot-scripts",
+    "chat"
   ],
   "repository": {
     "type": "git",
@@ -18,12 +19,6 @@
   "dependencies": {
     "coffee-script": "~1.6",
     "underscore": "^1.6.0"
-  },
-  "devDependencies": {
-    "mocha": "*",
-    "chai": "*",
-    "sinon-chai": "*",
-    "sinon": "*"
   },
   "main": "index.coffee",
   "scripts": {
