@@ -31,8 +31,7 @@ module.exports = (robot) ->
   # Convert 2D list to native object
   # expand "user1,user2" to "@user1 @user2"
   groups = _.reduce(groups, (obj, val, index) ->
-    sendTo = val[1]
-    sendTo = "@" + users.replace(/,/g, ' @')
+    sendTo = "@" + val[1].replace(/,/g, ' @')
     obj[val[0].toLowerCase()] = sendTo
     obj
   , {})
