@@ -20,8 +20,5 @@
     "coffee-script": "~1.6",
     "underscore": "^1.6.0"
   },
-  "main": "index.coffee",
-  "scripts": {
-    "test": "script/test"
-  }
+  "main": "index.coffee"
 }
