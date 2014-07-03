@@ -1,35 +1,24 @@
-# Hubot Example
+# Hubot Group Alias
 
-An example script package for Hubot
+Group Alias is a simple script which allows you to define new `@mentions` which are expanded. For example, you could define `@dev`, `@design` to send to all members of your teams.
 
-[![Build Status](https://travis-ci.org/hubot-scripts/hubot-example.png)](https://travis-ci.org/hubot-scripts/hubot-example)
+## Configuration
+1. All this package to your `package.json`. Do this by placing
+```
+"hubot-group-alias": "cycomachead/hubot-group-alias"
+```
+in your dependencies section.
+2. Add "hubot-group-alias" to `external-scripts.json`
+3. Set the `HUBOT_GROUP_ALIAS` variable.
 
-## Directory Structure
+        heroku config:add HEROKU_URL=...
 
-Using the common directory structure for hubot script packages it will be easy
-to manage and allow others to easily contribute to your package.
-
-### script
-
-This directory is home to a couple of development scripts; `bootstrap` and `test`
-they're used to bootstrap the development environment and run tests
-respectively.
-
-### src
-
-This directory is home to the actual hubot scripts in the package. Your
-`index.coffee` entry point will load the scripts from this directory.
-
-### test
-
-This directory is home to any tests you write for your scripts. This example
-package uses Mocha, Chai and Sinon to manage writing tests.
-
-## Advantages of Building a Package
-
-Some of the advantages of building an npm package for your hubot script(s) are:
-
-* You don't need to rely on when hubot-scripts package is released.
-* You can specify dependencies in the `package.json` rather than have users
-  manually specify them
-* You can easily add tests using your favourite frameworks and libraries
+####   `HUBOUT_GROUP_ALIAS`
+The format for configuration is easy:
+    alias1=user1,user2;aslias2=user1
+That is:
+* Separate different aliases by `;`
+* Define an alias with `=`
+* Separate users by `,`
+* Users should __not__ have `@`
+* aliases are case insensitive.
