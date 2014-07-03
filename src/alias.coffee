@@ -1,5 +1,5 @@
 # Description:
-#   Define user groups to @ mention groups of people at once.
+#   Define user aliases to @ mention groups of people at once.
 #
 # Dependencies:
 #   underscorejs
@@ -21,7 +21,10 @@ _ = require 'underscore'
 
 module.exports = (robot) ->
 
-  config = process.env.HUBOT_GROUP_ALIAS || ''
+  config = process.env.HUBOT_GROUP_ALIAS
+
+  if !config
+    return
 
   groups = config.split(';')
 
@@ -46,7 +49,7 @@ module.exports = (robot) ->
 
 
   # Grabs all messages starting with @
-  # TODO: Complie regex?
+  # TODO: Complie regex - match only aliases?
   # TODO: Handle @ anywhere in message
   robot.hear /@(\w+) (.*)$/i, (msg) ->
     alias = msg.match[1].toLowerCase()
