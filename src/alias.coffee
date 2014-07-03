@@ -24,6 +24,7 @@ module.exports = (robot) ->
   config = process.env.HUBOT_GROUP_ALIAS
 
   if !config
+    console.log "Warning: Configuration HUBOT_GROUP_ALIAS is not defined."
     return
 
   groups = config.split(';')
