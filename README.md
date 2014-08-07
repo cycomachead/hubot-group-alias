@@ -15,7 +15,7 @@ in your dependencies section.
 
 ####   `HUBOUT_GROUP_ALIAS`
 The format for configuration is easy:
-    alias1=user1,user2;aslias2=user1
+    alias1=user1,user2;alias2=user1
 That is:
 * Separate different aliases by `;`
 * Define an alias with `=`
