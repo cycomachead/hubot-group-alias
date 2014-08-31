@@ -11,10 +11,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/cycomachead/hubot-group-alias.git"
+    "url": "git://github.com/hubot-scripts/hubot-group-alias.git"
   },
   "bugs": {
-    "url": "https://github.com/cycomachead/hubot-group-alias/issues"
+    "url": "https://github.com/hubot-scripts/hubot-group-alias/issues"
   },
   "dependencies": {
     "coffee-script": "~1.6",
