@@ -20,11 +20,13 @@ npm install --save hubot-group-aliad
 
 ####   `HUBOUT_GROUP_ALIAS`
 The format for configuration is easy:
+
     alias1=user1,user2;alias2=user1
+
 That is:
 
-* Separate different aliases by `;`
-* Define an alias with `=`
-* Separate users by `,`
-* Users (and aliases) should __not__ have `@`
-* aliases are case insensitive.
+* Separate different aliases by `;`.
+* Define an alias with `=`.
+* Separate users by `,`.
+* Users (and aliases) should __not__ have `@`.
+* Aliases are case insensitive.
