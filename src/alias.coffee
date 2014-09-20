@@ -45,15 +45,15 @@ module.exports = (robot) ->
       all_aliases.push(k)
 
   # Prepend the users @mentions to the message
-  expand = (alias, message) ->
-    groups[alias] + "\n #{message}"
-
+  expand = (alias, replace, message) ->
+    message.replace(replace, alias)
 
   # Grabs all messages starting with @
   # TODO: Complie regex - match only aliases?
   # TODO: Handle @ anywhere in message
-  robot.hear /@(\w+) (.*)$/i, (msg) ->
-    alias = msg.match[1].toLowerCase()
+  robot.hear /(.*)@(\w+) (.*)$/i, (msg) ->
+    alias = msg.match[2].toLowerCase()
+    console.log msg.match
     if alias in all_aliases
-      msg.send expand(alias, msg.match[2])
+      msg.send expand(alias, msg.match[2], msg.match[0])
 
