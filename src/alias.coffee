@@ -56,4 +56,3 @@ module.exports = (robot) ->
     console.log msg.match
     if alias in all_aliases
       msg.send expand(alias, msg.match[2], msg.match[0])
-
