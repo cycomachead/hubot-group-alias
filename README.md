@@ -16,7 +16,7 @@ npm install --save hubot-group-aliad
 2. Add "hubot-group-alias" to `external-scripts.json`
 3. Set the `HUBOT_GROUP_ALIAS` variable.
 
-        heroku config:add HUBOT_GROUP_ALIAS`=...
+        heroku config:add HUBOT_GROUP_ALIAS=...
 
 ####   `HUBOUT_GROUP_ALIAS`
 The format for configuration is easy:
