@@ -10,7 +10,7 @@ Group Alias is a simple script which allows you to define new `@mentions` which 
 in your dependencies section.
 or run:
 ```
-npm install --save hubot-group-aliad
+npm install --save hubot-group-alias
 ```
 
 2. Add "hubot-group-alias" to `external-scripts.json`
