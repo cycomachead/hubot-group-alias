@@ -20,7 +20,7 @@ npm i --save hubot-group-alias
 
 ## Autocomplete
 By default, most chat apps don't support autocomplete for bots. :(
-However, Hubot Group Alias includes the ability to use custom emoji in order to allow apps autocomplete. This should work with most chat clients. 
+However, Hubot Group Alias includes the ability to use custom emoji in order to allow apps autocomplete. This should work with most chat clients.
 The script matches the following forms of the alias `dev`:
 
 * @dev
