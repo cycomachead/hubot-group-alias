@@ -24,35 +24,30 @@ module.exports = (robot) ->
   config = process.env.HUBOT_GROUP_ALIAS
 
   if !config
-    console.log "Warning: Configuration HUBOT_GROUP_ALIAS is not defined."
+    robot.logger.warning "Configuration HUBOT_GROUP_ALIAS is not defined."
     return
 
   groups = config.split(';')
 
   # Create 2D list of [alias, users]
-  groups = _.map(groups, (value, item, array) -> value.split('='))
+  groups = _.map(groups, (val, item, array) -> val.split('='))
+  # expand "user1,user2" to "@user1 @user2"
+  groups = _.map(groups, (val, item, array) -> [val[0],
+    '@' + val[1].split(',').join(' @')])
 
   # Convert 2D list to native object
-  # expand "user1,user2" to "@user1 @user2"
-  groups = _.reduce(groups, (obj, val, index) ->
-    sendTo = "@" + val[1].replace(/,/g, ' @')
-    obj[val[0].toLowerCase()] = sendTo
-    obj
-  , {})
+  groups = _.object(groups)
 
-  all_aliases = []
-  for own k, v of groups
-      all_aliases.push(k)
+  # Replace aliases with @mentions in the message
+  expand = (message) ->
+    for own k, v of groups
+      reg = new RegExp('[:(]' + k + '[:)]|@' + k, 'i')
+      message = message.replace(reg, v)
+    return message
 
-  # Prepend the users @mentions to the message
-  expand = (alias, replace, message) ->
-    message.replace(replace, alias)
-
-  # Grabs all messages starting with @
-  # TODO: Complie regex - match only aliases?
-  # TODO: Handle @ anywhere in message
-  robot.hear /(.*)@(\w+) (.*)$/i, (msg) ->
-    alias = msg.match[2].toLowerCase()
-    console.log msg.match
-    if alias in all_aliases
-      msg.send expand(alias, msg.match[2], msg.match[0])
+  # Compile RegEx to match only the aliases
+  # Note this matches (alias) :alias: and @alias
+  aliases = _.keys(groups).join('|')
+  regex = new RegExp('((?:\\(|\\:|@)(' + aliases + ')(?:\\|\\:)*)', 'i')
+  robot.hear regex, (msg) ->
+    msg.send expand(msg.message.text)
