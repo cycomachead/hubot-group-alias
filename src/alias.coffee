@@ -41,7 +41,7 @@ module.exports = (robot) ->
   # Replace aliases with @mentions in the message
   expand = (message) ->
     for own k, v of groups
-      reg = new RegExp('[:(]' + k + '[:)]|@' + k, 'i')
+      reg = new RegExp('[:(]+' + k + '[:)]+|@' + k, 'i')
       message = message.replace(reg, v)
     return message
 

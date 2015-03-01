@@ -43,5 +43,5 @@ The script matches the following forms of the alias `dev`:
 * @dev
 * (dev)
 * :dev:
-* ::dev:: is coming soon!
+* ::dev::
 

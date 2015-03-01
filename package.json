@@ -1,14 +1,17 @@
 {
   "name": "hubot-group-alias",
   "description": "Hubot page for user @mention aliases",
-  "version": "1.5.0",
+  "version": "1.5.2",
   "author": "Michael Ball <cycomachead@gmail.com>",
   "license": "MIT",
   "keywords": [
     "hubot",
     "hubot-scripts",
     "chat",
-    "alias"
+    "alias",
+    "groups",
+    "mentions",
+    "emoji"
   ],
   "repository": {
     "type": "git",
