@@ -4,10 +4,12 @@ Group Alias is a simple [Hubot][hubot] plugin which allows you to define new *"@
 
 ## Configuration
 1. All this package to your `package.json`. Do this by running this command:
+
 	```sh
 	npm i --save hubot-group-alias
 	```
 2. Add "hubot-group-alias" to `external-scripts.json`:
+
 	```json
 	[
 	"...",
