@@ -1,7 +1,7 @@
 {
   "name": "hubot-group-alias",
   "description": "Hubot page for user @mention aliases",
-  "version": "1.5.2",
+  "version": "1.5.4",
   "author": "Michael Ball <cycomachead@gmail.com>",
   "license": "MIT",
   "keywords": [
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "coffee-script": "~1.6",
-    "underscore": "^1.6.0"
+    "underscore": "^1.8.2"
   },
   "main": "index.coffee"
 }
