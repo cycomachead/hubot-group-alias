@@ -48,8 +48,9 @@ module.exports = (robot) ->
   # Compile RegEx to match only the aliases
   # Note this matches (alias) :alias: and @alias
   aliases = _.keys(groups).join('|')
+  # The last group is a set of stop conditions (word boundaries and .)
   atRE = '(?:@(' + aliases + ')(?:\\b[^.]))'
-  emojiRE = '(?:\\(|\\:)(' + aliases + ')(?:\\)|\\:)'
+  emojiRE = '(?:[(:])(' + aliases + ')(?:[:)])'
   regex = new RegExp(atRE + '|' + emojiRE, 'i')
   robot.hear regex, (msg) ->
     msg.send expand(msg.message.text)
