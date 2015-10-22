@@ -49,14 +49,23 @@ The script matches the following forms of the alias `dev`:
 ## Usage
 For example:
 If you set the configuration as:
+
 `dev=Alice,Bob,Eve`
+
 And the message sent is:
+
 `PO> Hey @dev, there's a standup in 5 min.`
+
 Then this message will be sent by Hubot:
+
 `Hubot> Hey @Alice @Bob @Eve, there's a standup in 5 min.`
 
-Note that as of _1.6.0_ users' names are filtered from the messages they send.
+**Note** that as of version _1.6.0_ users' names are filtered from the messages they send.
+
 In the above example, the following would happen if @Alice sent a message:
+
 `Alice> Hey @dev, there's a standup in 5 min.`
+
 `Hubot> Hey @Bob @Eve, there's a standup in 5 min.`
+
 
