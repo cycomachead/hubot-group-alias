@@ -1,6 +1,6 @@
 # Hubot Group Alias
 
-Group Alias is a simple [Hubot][hubot] plugin which allows you to define new *"@mentions"* which are automatically expanded by your bot. For example, you could define `@dev`, `@design` to send a message to all members of your teams.
+Group Alias is a simple [Hubot][hubot] plugin which allows you to define new **"@mentions"** which are automatically expanded by your bot. For example, you could define `@dev`, `@design` to send a message to all members of your teams.
 
 ## Configuration
 1. All this package to your `package.json`. Do this by running this command:
@@ -38,7 +38,9 @@ That is:
 
 ## Autocomplete Abilities
 By default, most chat apps don't support autocomplete for bots. :(
-However, Hubot Group Alias includes the ability to use custom emoji in order to allow apps autocomplete. This should work with most chat clients, though please file an issue if there is a different emoji syntax I've missed. To use this feature, all you need to do is add the emoji to your particular chatroom, with the same name as the alias.
+
+However, Group Alias includes the ability to use custom emoji in order to allow apps autocomplete. This should work with most chat clients, though please file an issue if there is a different emoji syntax I've missed. To use this feature, all you need to do is add the emoji to your particular chatroom, with the same name as the alias.
+
 The script matches the following forms of the alias `dev`:
 
 * @dev
@@ -48,9 +50,8 @@ The script matches the following forms of the alias `dev`:
 
 ## Usage
 For example:
-If you set the configuration as:
 
-`dev=Alice,Bob,Eve`
+If you set the configuration as:  `dev=Alice,Bob,Eve`
 
 And the message sent is:
 
@@ -63,9 +64,8 @@ Then this message will be sent by Hubot:
 **Note** that as of version _1.6.0_ users' names are filtered from the messages they send.
 
 In the above example, the following would happen if @Alice sent a message:
-
-`Alice> Hey @dev, there's a standup in 5 min.`
-
-`Hubot> Hey @Bob @Eve, there's a standup in 5 min.`
-
+```
+Alice> Hey @dev, there's a standup in 5 min.`
+Hubot> Hey @Bob @Eve, there's a standup in 5 min.`
+```
 
