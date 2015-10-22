@@ -39,7 +39,7 @@ module.exports = (robot) ->
   groups = _.object(groups)
 
   # Replace aliases with @mentions in the message
-  expand = (message) ->
+  expand = (message, user) ->
     for own k, v of groups
       reg = new RegExp('[:(]+' + k + '[:)]+|@' + k, 'i')
       message = message.replace(reg, v)
@@ -48,6 +48,8 @@ module.exports = (robot) ->
   # Compile RegEx to match only the aliases
   # Note this matches (alias) :alias: and @alias
   aliases = _.keys(groups).join('|')
-  regex = new RegExp('(?:@(' + aliases + ')\\b)|(?:\\(|\\:)(' + aliases + ')(?:\\)|\\:)', 'i')
+  atRE = '(?:@(' + aliases + ')(?:\\b[^.]))'
+  emojiRE = '(?:\\(|\\:)(' + aliases + ')(?:\\)|\\:)'
+  regex = new RegExp(atRE + '|' + emojiRE, 'i')
   robot.hear regex, (msg) ->
     msg.send expand(msg.message.text)
