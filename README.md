@@ -6,7 +6,7 @@ Group Alias is a simple [Hubot][hubot] plugin which allows you to define new *"@
 1. All this package to your `package.json`. Do this by running this command:
 
 	```sh
-	npm i --save hubot-group-alias
+	npm install --save hubot-group-alias
 	```
 2. Add "hubot-group-alias" to `external-scripts.json`:
 
@@ -51,6 +51,12 @@ For example:
 If you set the configuration as:
 `dev=Alice,Bob,Eve`
 And the message sent is:
-`Disgruntled PO: Hey @dev, there's a standup in 5 min.`
+`PO> Hey @dev, there's a standup in 5 min.`
 Then this message will be sent by Hubot:
-`Hubot: Hey @Alice @Bob @Eve, there's a standup in 5 min.`
+`Hubot> Hey @Alice @Bob @Eve, there's a standup in 5 min.`
+
+Note that as of _1.6.0_ users' names are filtered from the messages they send.
+In the above example, the following would happen if @Alice sent a message:
+`Alice> Hey @dev, there's a standup in 5 min.`
+`Hubot> Hey @Bob @Eve, there's a standup in 5 min.`
+

@@ -1,7 +1,7 @@
 {
   "name": "hubot-group-alias",
   "description": "Hubot page for user @mention aliases",
-  "version": "1.5.4",
+  "version": "1.6.0",
   "author": "Michael Ball <cycomachead@gmail.com>",
   "license": "MIT",
   "keywords": [
@@ -15,10 +15,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/hubot-scripts/hubot-group-alias.git"
+    "url": "git://github.com/cycomachead/hubot-group-alias.git"
   },
   "bugs": {
-    "url": "https://github.com/hubot-scripts/hubot-group-alias/issues"
+    "url": "https://github.com/cycomachead/hubot-group-alias/issues"
   },
   "dependencies": {
     "coffee-script": "~1.6",
