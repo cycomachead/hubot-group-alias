@@ -48,6 +48,6 @@ module.exports = (robot) ->
   # Compile RegEx to match only the aliases
   # Note this matches (alias) :alias: and @alias
   aliases = _.keys(groups).join('|')
-  regex = new RegExp('((?:\\(|\\:|@)(' + aliases + ')(?:\\|\\:)*)', 'i')
+  regex = new RegExp('(?:@(' + aliases + ')\\b)|(?:\\(|\\:)(' + aliases + ')(?:\\)|\\:)', 'i')
   robot.hear regex, (msg) ->
     msg.send expand(msg.message.text)
