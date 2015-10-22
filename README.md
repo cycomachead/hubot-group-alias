@@ -69,3 +69,4 @@ Alice> Hey @dev, there's a standup in 5 min.`
 Hubot> Hey @Bob @Eve, there's a standup in 5 min.`
 ```
 
+[hubot]: https://github.com/github/hubot/
