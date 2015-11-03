@@ -1,7 +1,7 @@
 {
   "name": "hubot-group-alias",
-  "description": "Hubot page for user @mention aliases",
-  "version": "2.0.0",
+  "description": "Easy @mention groups aliases for your chatroom",
+  "version": "2.1.0",
   "author": "Michael Ball <cycomachead@gmail.com>",
   "license": "MIT",
   "keywords": [
@@ -11,7 +11,9 @@
     "alias",
     "groups",
     "mentions",
-    "emoji"
+    "emoji",
+    "slack",
+    "hipchat"
   ],
   "repository": {
     "type": "git",

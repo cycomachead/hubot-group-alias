@@ -100,7 +100,7 @@ expand = (message, groups, user) ->
 buildRegExp = ->
   if useDynamicGroups
     aliases = '\\w+'
-  else # Compile RegEx to match only defined aliases
+  else # match only defined aliases
     aliases = _.keys(buildGroupObject()).join('|')
   # The last group is a set of stop conditions (word boundaries or end of line)
   atRE = '(?:@(' + aliases + ')(?:\\b[^.]|$))'
@@ -116,11 +116,12 @@ module.exports = (robot) ->
     robot.logger.warning "Using dynamic groups requires hubot-auth to be loaded"
     return
 
-  robot.respond /list groups? alias(es)?/i, (resp) ->
-    resp.send "The currently setup groups are: #{listToMentions(getGroupsList())}"
+  robot.respond /list groups?( alias(es)?)?/i, (resp) ->
+    groups = listToMentions(getGroupsList())
+    resp.send "The currently setup groups are: #{groups}"
 
   regex = buildRegExp()
   robot.hear regex, (resp) ->
     groups = getGroups(resp.message.text)
-    if !_.isEqual(groups, {})
+    if !_.isEqual(groups, {}) # don't send message if no groups found.
       resp.send expand(resp.message.text, groups, resp.message.user)

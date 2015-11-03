@@ -1,8 +1,8 @@
 # Hubot Group Alias
 
-Group Alias is a simple [Hubot][hubot] plugin which allows you to define new **"@mentions"** which are automatically expanded by your bot. For example, you could define `@dev`, `@design` to send a message to all members of your teams.
+Group Alias is a simple [Hubot][hubot] package which allows you to define new **"@mentions"** which are automatically expanded. For example, you could define `@dev`, `@design` to send a message to all members of your teams. Using `hubot-auth`, you can also dynamically define groups!
 
-## Configuration
+## Setup
 1. All this package to your `package.json`. Do this by running this command:
 
 	```sh
