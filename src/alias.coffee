@@ -58,27 +58,18 @@ expand = (message, user) ->
     message = message.replace(reg, members)
   return message
 
-buildStaticRegExp = () ->
-  console.log 'build static regexp'
-  # Compile RegEx to match only the aliases
-  # Note this matches (alias) :alias: and @alias
-  aliases = _.keys(buildGroupObject()).join('|')
+buildRegExp = () ->
+  if useDynamicGroups
+    aliases = '\\w+'
+  else
+    # Compile RegEx to match only the aliases
+    # Note this matches (alias) :alias: and @alias
+    aliases = _.keys(buildGroupObject()).join('|')
   # The last group is a set of stop conditions (word boundaries or end of line)
   atRE = '(?:@(' + aliases + ')(?:\\b[^.]|$))'
   emojiRE = '(?:[(:])(' + aliases + ')(?:[:)])'
 
-  new RegExp(atRE + '|' + emojiRE, 'i')
-
-buildDynamicRegExp = () ->
-  atRE = '(?:@(\\w+)(?:\\b[^.]|$))'
-  emojiRE = '(?:[(:])(\\w+)(?:[:)])'
-  new RegExp(atRE + '|' + emojiRE, 'i')
-
-buildRegExp = () ->
-  if useDynamicGroups
-    buildDynamicRegExp()
-  else
-    buildStaticRegExp()
+  return new RegExp(atRE + '|' + emojiRE, 'i')
 
 module.exports = (robot) ->
   if !config
