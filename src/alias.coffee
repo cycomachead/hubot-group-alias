@@ -6,6 +6,7 @@
 #
 # Configuration:
 #   HUBOT_GROUP_ALIAS: group1=user1,user2;group2=user1,user2,user3 [...]
+#   HUBOT_GROUP_ALIAS_NAME_PROP: A property on the user object for @metions
 #
 # Commands:
 #   None
@@ -38,11 +39,15 @@ module.exports = (robot) ->
   # Convert 2D list to native object
   groups = _.object(groups)
 
+  user_prop = process.env.HUBOT_GROUP_ALIAS_NAME_PROP
+
   # Replace aliases with @mentions in the message
   expand = (message, user) ->
+    filterName = user.mention_name || user[user_prop]
     for own alias, members of groups
       # Filter inviduals from their own messages.
-      members = members.replace('@' + user, '')
+      if filterName
+        members = members.replace('@' + filterName, '')
       reg = new RegExp('[:(]+' + alias + '[:)]+|@' + alias, 'i')
       message = message.replace(reg, members)
     return message
@@ -50,9 +55,9 @@ module.exports = (robot) ->
   # Compile RegEx to match only the aliases
   # Note this matches (alias) :alias: and @alias
   aliases = _.keys(groups).join('|')
-  # The last group is a set of stop conditions (word boundaries and .)
+  # The last group is a set of stop conditions (word boundaries or end of line)
   atRE = '(?:@(' + aliases + ')(?:\\b[^.]|$))'
   emojiRE = '(?:[(:])(' + aliases + ')(?:[:)])'
   regex = new RegExp(atRE + '|' + emojiRE, 'i')
   robot.hear regex, (msg) ->
-    msg.send expand(msg.message.text, msg.message.user.name)
+    msg.send expand(msg.message.text, msg.message.user)
