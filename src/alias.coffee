@@ -1,15 +1,15 @@
 # Description:
-#   Define user aliases to @ mention groups of people at once.
+#   Define user aliases to @mention groups of people at once.
 #
 # Dependencies:
-#   underscorejs
+#   hubot-auth - for dynamically configured grouos
 #
 # Configuration:
 #   HUBOT_GROUP_ALIAS: group1=user1,user2;group2=user1,user2,user3 [...]
 #   HUBOT_GROUP_ALIAS_NAME_PROP: A property on the user object for @metions
 #
 # Commands:
-#   None
+#   hubot list group aliases - give the names of the defined groups.
 #
 # Notes:
 #   Use @group_name in your message and your robot will pass it along to
@@ -39,6 +39,7 @@ buildGroupObject = ->
   groupCache = _.object(staticGroups)
   return groupCache
 
+# Return Groups Mentioned in a message if there is a dynamic group.
 getGroups = (text) ->
   if useDynamicGroups
     groupMap = {}
@@ -58,6 +59,17 @@ getGroups = (text) ->
     return groupMap
   else
     return buildGroupObject()
+
+getGroupsList = ->
+  if useDynamicGroups
+    groups = []
+    users = robot.brain.data.users
+    for own id, user of users
+      roles = robot.auth.userRoles(user)
+      groups = groups.concat(roles)
+    return _.uniq(groups)
+  else
+    return Object.keys(buildGroupObject())
 
 userFromName = (name) ->
   allUsers = robot.brain.data.users
@@ -84,17 +96,15 @@ expand = (message, groups, user) ->
     message = message.replace(reg, members)
   return message
 
+# Note this matches (alias) :alias: and @alias
 buildRegExp = ->
   if useDynamicGroups
     aliases = '\\w+'
-  else
-    # Compile RegEx to match only the aliases
-    # Note this matches (alias) :alias: and @alias
+  else # Compile RegEx to match only defined aliases
     aliases = _.keys(buildGroupObject()).join('|')
   # The last group is a set of stop conditions (word boundaries or end of line)
   atRE = '(?:@(' + aliases + ')(?:\\b[^.]|$))'
   emojiRE = '(?:[(:])(' + aliases + ')(?:[:)])'
-
   return new RegExp(atRE + '|' + emojiRE, 'i')
 
 module.exports = (robot) ->
@@ -105,6 +115,9 @@ module.exports = (robot) ->
   if useDynamicGroups && !robot.auth
     robot.logger.warning "Using dynamic groups requires hubot-auth to be loaded"
     return
+
+  robot.respond /list groups? alias(es)?/i, (resp) ->
+    resp.send "The currently setup groups are: #{listToMentions(getGroupsList())}"
 
   regex = buildRegExp()
   robot.hear regex, (resp) ->
