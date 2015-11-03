@@ -25,7 +25,7 @@ user_prop = process.env.HUBOT_GROUP_ALIAS_NAME_PROP || ''
 useDynamicGroups = config == 'DYNAMIC'
 groupCache = {}
 
-buildGroupObject = () ->
+buildGroupObject = ->
   if !_.isEqual(groupCache, {})
     return groupCache
   # Create a 1D list of group assignments
@@ -84,7 +84,7 @@ expand = (message, groups, user) ->
     message = message.replace(reg, members)
   return message
 
-buildRegExp = () ->
+buildRegExp = ->
   if useDynamicGroups
     aliases = '\\w+'
   else
