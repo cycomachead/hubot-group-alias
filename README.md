@@ -44,6 +44,20 @@ That is:
 
 **Note**: *When set in a shell environment, you may want to put `''` around your alias definition so that any `;` don't try to break the command.*
 
+### Dynamic Configuration
+Group Alias supports dynamically defining groups using the [hubot-auth][auth] package. All "roles" that are created by `hubot-auth` will be treated able to be expanded into @mention messages. To do this, simple set:
+
+	HUBOUT_GROUP_ALIAS='DYNAMIC'
+
+and make sure `hubot-auth` is installed.
+
+##### Notes
+* The only supported modes are dynamic or pre-defined. There is currently not "hybrid" mode.
+* Currently dynamic mode is _not_ case sensitive because `hubot-auth` roles act the same way.
+* You should probably set `HUBOUT_GROUP_ALIAS_NAME_PROP` because otherwise, `hubot-auth` simply returns full user names.
+
+[auth]: https://github.com/hubot-scripts/hubot-auth
+
 ## Autocomplete Abilities
 By default, most chat apps don't support autocomplete for bots. :(
 
