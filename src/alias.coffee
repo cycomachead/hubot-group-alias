@@ -20,44 +20,72 @@
 
 _ = require 'underscore'
 
+config = process.env.HUBOT_GROUP_ALIAS
+user_prop = process.env.HUBOT_GROUP_ALIAS_NAME_PROP || ''
+useDynamicGroups = config == 'DYNAMIC'
+groupCache = {}
+
+buildGroupObject = () ->
+  if !_.isEqual(groupCache, {})
+    return groupCache
+  staticGroups = config.split(';')
+  # Create 2D list of [alias, users]
+  staticGroups = _.map(staticGroups, (val, item, array) -> val.split('='))
+  # expand "user1,user2" to "@user1 @user2"
+  staticGroups = _.map(staticGroups, (val, item, array) -> [val[0],
+    '@' + val[1].split(',').join(' @')])
+  # Convert 2D list to native object
+  groupCache = _.object(staticGroups)
+  console.log groupCache
+  return groupCache
+
+getGroups = (match) ->
+  if useDynamicGroups
+    return ''
+  else
+    return buildGroupObject()
+
+
+# Replace aliases with @mentions in the message
+expand = (message, user) ->
+  filterName = user.mention_name || user[user_prop]
+  groups = getGroups(message.match)
+  for own alias, members of groups
+    # Filter inviduals from their own messages.
+    if filterName
+      members = members.replace('@' + filterName, '')
+    reg = new RegExp('[:(]+' + alias + '[:)]+|@' + alias, 'i')
+    message = message.replace(reg, members)
+  return message
+
+buildStaticRegExp = () ->
+  console.log 'build static regexp'
+  # Compile RegEx to match only the aliases
+  # Note this matches (alias) :alias: and @alias
+  aliases = _.keys(buildGroupObject()).join('|')
+  # The last group is a set of stop conditions (word boundaries or end of line)
+  atRE = '(?:@(' + aliases + ')(?:\\b[^.]|$))'
+  emojiRE = '(?:[(:])(' + aliases + ')(?:[:)])'
+
+  new RegExp(atRE + '|' + emojiRE, 'i')
+
+buildDynamicRegExp = () ->
+  atRE = '(?:@(\\w+)(?:\\b[^.]|$))'
+  emojiRE = '(?:[(:])(\\w+)(?:[:)])'
+  new RegExp(atRE + '|' + emojiRE, 'i')
+
+buildRegExp = () ->
+  if useDynamicGroups
+    buildDynamicRegExp()
+  else
+    buildStaticRegExp()
+
 module.exports = (robot) ->
-
-  config = process.env.HUBOT_GROUP_ALIAS
-
   if !config
     robot.logger.warning "Configuration HUBOT_GROUP_ALIAS is not defined."
     return
 
-  groups = config.split(';')
-
-  # Create 2D list of [alias, users]
-  groups = _.map(groups, (val, item, array) -> val.split('='))
-  # expand "user1,user2" to "@user1 @user2"
-  groups = _.map(groups, (val, item, array) -> [val[0],
-    '@' + val[1].split(',').join(' @')])
-
-  # Convert 2D list to native object
-  groups = _.object(groups)
-
-  user_prop = process.env.HUBOT_GROUP_ALIAS_NAME_PROP
-
-  # Replace aliases with @mentions in the message
-  expand = (message, user) ->
-    filterName = user.mention_name || user[user_prop]
-    for own alias, members of groups
-      # Filter inviduals from their own messages.
-      if filterName
-        members = members.replace('@' + filterName, '')
-      reg = new RegExp('[:(]+' + alias + '[:)]+|@' + alias, 'i')
-      message = message.replace(reg, members)
-    return message
-
-  # Compile RegEx to match only the aliases
-  # Note this matches (alias) :alias: and @alias
-  aliases = _.keys(groups).join('|')
-  # The last group is a set of stop conditions (word boundaries or end of line)
-  atRE = '(?:@(' + aliases + ')(?:\\b[^.]|$))'
-  emojiRE = '(?:[(:])(' + aliases + ')(?:[:)])'
-  regex = new RegExp(atRE + '|' + emojiRE, 'i')
+  regex = buildRegExp()
+  console.log 'REGEX', regex
   robot.hear regex, (msg) ->
     msg.send expand(msg.message.text, msg.message.user)
