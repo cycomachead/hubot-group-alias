@@ -20,13 +20,9 @@
   "bugs": {
     "url": "https://github.com/cycomachead/hubot-group-alias/issues"
   },
-  "peerDependencies": {
-    "hubot": "2.x.x",
-    "hubot-auth": "latest"
-  },
   "dependencies": {
     "coffee-script": "~1.6",
-    "underscore": "^1.8.2"
+    "lodash": "latest"
   },
   "main": "index.coffee"
 }

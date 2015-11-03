@@ -18,7 +18,7 @@
 # Author:
 #   Michael Ball @cycomachead
 
-_ = require 'underscore'
+_ = require('lodash')
 
 config = process.env.HUBOT_GROUP_ALIAS
 user_prop = process.env.HUBOT_GROUP_ALIAS_NAME_PROP || ''
