@@ -36,7 +36,6 @@ buildGroupObject = () ->
     '@' + val[1].split(',').join(' @')])
   # Convert 2D list to native object
   groupCache = _.object(staticGroups)
-  console.log groupCache
   return groupCache
 
 getGroups = (match) ->
@@ -48,7 +47,8 @@ getGroups = (match) ->
 
 # Replace aliases with @mentions in the message
 expand = (message, user) ->
-  filterName = user.mention_name || user[user_prop]
+  # mention_name is for Hipchat
+  filterName = user[user_prop] || user.mention_name || user.name
   groups = getGroups(message.match)
   for own alias, members of groups
     # Filter inviduals from their own messages.
@@ -77,6 +77,5 @@ module.exports = (robot) ->
     return
 
   regex = buildRegExp()
-  console.log 'REGEX', regex
   robot.hear regex, (msg) ->
     msg.send expand(msg.message.text, msg.message.user)
