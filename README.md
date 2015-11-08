@@ -21,13 +21,17 @@ Group Alias is a simple [Hubot][hubot] package which allows you to define new **
 
 		heroku config:add HUBOT_GROUP_ALIAS=...
 
-4. _OPTIONAL_: set `HUBOUT_GROUP_ALIAS_NAME_PROP`
-	* This is an adapter-specific property for filtering out the username from their own messages they send. The problem is, every Hubot adapter exposes this parameter as a different key on the user object. Here are some examples:
-	* HipChat: `HUBOUT_GROUP_ALIAS_NAME_PROP="mention_name"`
-		* See the [Hipchat adapter source][hc-source]
-	* Slack: TODO. I think it should be just "name", but not sure.
+4. _optional_: set `HUBOUT_GROUP_ALIAS_NAME_PROP`
+	* This is the property of the `User` object that contains the short or @ name for each user. The problem is this field is non-standard and defined by each user.
+	* This field is likely __required__ if you want sender's usernames to be filtered from the messages sent, or you're using `hubot-auth`. This is because both those features rely on matching this property for expanding the message.
+	* This property first checks `User.mention_name` then `User.name`
+	* Here are some examples:
+		* HipChat: `HUBOUT_GROUP_ALIAS_NAME_PROP="mention_name"`
+			* See the [HipChat adapter source][hc-source] to find `mention_name`
+		* Slack: I [_think_][slack-source] this should be just `User.name`, but I'm not sure, because I don't use Slack.
 
 [hc-source]: https://github.com/hipchat/hubot-hipchat/blob/c2846981dd533860352187c7369e4feb792a9062/src/connector.coffee#L411
+[slack-source]: https://github.com/slackhq/hubot-slack/blob/master/src/slack.coffee#L180
 
 ###   `HUBOUT_GROUP_ALIAS` Format
 The format for configuration is easy:
