@@ -20,8 +20,9 @@ Group Alias is a simple [Hubot][hubot] package which allows you to define new **
 3. Set the `HUBOT_GROUP_ALIAS` variable.
 
 		heroku config:add HUBOT_GROUP_ALIAS=...
-
-4. _optional_: set `HUBOUT_GROUP_ALIAS_NAME_PROP`
+	
+	* (Read below for configuration instructions.)
+4. _Optional_: set `HUBOUT_GROUP_ALIAS_NAME_PROP`
 	* This is the property of the `User` object that contains the short or @ name for each user. The problem is this field is non-standard and defined by each user.
 	* This field is likely __required__ if you want sender's usernames to be filtered from the messages sent, or you're using `hubot-auth`. This is because both those features rely on matching this property for expanding the message.
 	* This property first checks `User.mention_name` then `User.name`
@@ -56,9 +57,9 @@ Group Alias supports dynamically defining groups using the [hubot-auth][auth] pa
 and make sure `hubot-auth` is installed.
 
 ##### Notes
-* The only supported modes are dynamic or pre-defined. There is currently not "hybrid" mode.
+* The only supported modes are dynamic or pre-defined. There is currently no "hybrid" mode. (I would welcome a PR if anyone wants this!)
 * Currently dynamic mode is _not_ case sensitive because `hubot-auth` roles act the same way.
-* You should probably set `HUBOUT_GROUP_ALIAS_NAME_PROP` because otherwise, `hubot-auth` simply returns full user names.
+* You should probably set `HUBOUT_GROUP_ALIAS_NAME_PROP` because otherwise, `hubot-auth` may use a different User name from the @ name. (Please see the section above for more details)
 
 [auth]: https://github.com/hubot-scripts/hubot-auth
 
