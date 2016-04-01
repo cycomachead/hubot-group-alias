@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "coffee-script": "~1.6",
-    "lodash": "latest"
+    "lodash": "~3.10.1"
   },
   "main": "index.coffee"
 }
