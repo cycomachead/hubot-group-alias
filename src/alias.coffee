@@ -111,7 +111,7 @@ module.exports = (robot) ->
   if !config
     robot.logger.warning "Configuration HUBOT_GROUP_ALIAS is not defined."
     return
-  
+
   if useDynamicGroups && !robot.auth
     robot.logger.warning "Using dynamic groups requires hubot-auth to be loaded"
     return
