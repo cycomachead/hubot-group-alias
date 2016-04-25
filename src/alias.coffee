@@ -5,11 +5,11 @@
 #   hubot-auth - for dynamically configured grouos
 #
 # Configuration:
-#   HUBOT_GROUP_ALIAS: group1=user1,user2;group2=user1,user2,user3 [...]
+#   HUBOT_GROUP_ALIAS: DYNAMIC (or) group1=user1,user2;group2=user1,user2 [...]
 #   HUBOT_GROUP_ALIAS_NAME_PROP: A property on the user object for @metions
 #
 # Commands:
-#   hubot list group aliases - give the names of the defined groups.
+#   hubot list group aliases - give the names of the alias groups.
 #
 # Notes:
 #   Use @group_name in your message and your robot will pass it along to
@@ -60,7 +60,7 @@ getGroups = (text) ->
   else
     return buildGroupObject()
 
-getGroupsList = ->
+getGroupsList = (robot) ->
   if useDynamicGroups
     groups = []
     users = robot.brain.data.users
@@ -117,7 +117,7 @@ module.exports = (robot) ->
     return
 
   robot.respond /list groups?( alias(es)?)?/i, (resp) ->
-    groups = listToMentions(getGroupsList())
+    groups = listToMentions(getGroupsList(robot))
     resp.send "The currently setup groups are: #{groups}"
 
   regex = buildRegExp()
