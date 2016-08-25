@@ -22,19 +22,19 @@ Group Alias is a simple [Hubot][hubot] package which allows you to define new **
 		heroku config:add HUBOT_GROUP_ALIAS=...
 	
 	* (Read below for configuration instructions.)
-4. _Optional_: set `HUBOUT_GROUP_ALIAS_NAME_PROP`
+4. _Optional_: set `HUBOT_GROUP_ALIAS_NAME_PROP`
 	* This is the property of the `User` object that contains the short or @ name for each user. The problem is this field is non-standard and defined by each user.
 	* This field is likely __required__ if you want sender's usernames to be filtered from the messages sent, or you're using `hubot-auth`. This is because both those features rely on matching this property for expanding the message.
 	* This property first checks `User.mention_name` then `User.name`
 	* Here are some examples:
-		* HipChat: `HUBOUT_GROUP_ALIAS_NAME_PROP="mention_name"`
+		* HipChat: `HUBOT_GROUP_ALIAS_NAME_PROP="mention_name"`
 			* See the [HipChat adapter source][hc-source] to find `mention_name`
 		* Slack: I [_think_][slack-source] this should be just `User.name`, but I'm not sure, because I don't use Slack.
 
 [hc-source]: https://github.com/hipchat/hubot-hipchat/blob/c2846981dd533860352187c7369e4feb792a9062/src/connector.coffee#L411
 [slack-source]: https://github.com/slackhq/hubot-slack/blob/master/src/slack.coffee#L180
 
-###   `HUBOUT_GROUP_ALIAS` Format
+###   `HUBOT_GROUP_ALIAS` Format
 The format for configuration is easy:
 
     alias1=user1,user2;alias2=user1
@@ -52,14 +52,14 @@ That is:
 ### Dynamic Configuration
 Group Alias supports dynamically defining groups using the [hubot-auth][auth] package. All "roles" that are created by `hubot-auth` will be treated able to be expanded into @mention messages. To do this, simple set:
 
-	HUBOUT_GROUP_ALIAS='DYNAMIC'
+	HUBOT_GROUP_ALIAS='DYNAMIC'
 
 and make sure `hubot-auth` is installed.
 
 ##### Notes
 * The only supported modes are dynamic or pre-defined. There is currently no "hybrid" mode. (I would welcome a PR if anyone wants this!)
 * Currently dynamic mode is _not_ case sensitive because `hubot-auth` roles act the same way.
-* You should probably set `HUBOUT_GROUP_ALIAS_NAME_PROP` because otherwise, `hubot-auth` may use a different User name from the @ name. (Please see the section above for more details)
+* You should probably set `HUBOT_GROUP_ALIAS_NAME_PROP` because otherwise, `hubot-auth` may use a different User name from the @ name. (Please see the section above for more details)
 
 [auth]: https://github.com/hubot-scripts/hubot-auth
 
