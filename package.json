@@ -1,7 +1,7 @@
 {
   "name": "hubot-group-alias",
   "description": "Easy @mention groups aliases for your chatroom",
-  "version": "2.1.3",
+  "version": "2.1.3-1",
   "author": "Michael Ball <cycomachead@gmail.com>",
   "license": "MIT",
   "keywords": [
