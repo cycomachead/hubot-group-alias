@@ -40,7 +40,7 @@ buildGroupObject = ->
   return groupCache
 
 # Return Groups Mentioned in a message if there is a dynamic group.
-getGroups = (text) ->
+getGroups = (robot, text) ->
   if useDynamicGroups
     groupMap = {}
     regex = /[:(]+(\w+)[:)]+|@(\w+)/gi
@@ -122,6 +122,6 @@ module.exports = (robot) ->
 
   regex = buildRegExp()
   robot.hear regex, (resp) ->
-    groups = getGroups(resp.message.text)
+    groups = getGroups(robot, resp.message.text)
     if !_.isEqual(groups, {}) # don't send message if no groups found.
       resp.send expand(resp.message.text, groups, resp.message.user)
