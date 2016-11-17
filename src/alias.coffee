@@ -29,7 +29,7 @@ buildGroupObject = ->
   if !_.isEqual(groupCache, {})
     return groupCache
   # Create a 1D list of group assignments
-  staticGroups = config.split(';')
+  staticGroups = _.without(config.split(';'), '')
   # Create 2D list of [alias, users]
   staticGroups = _.map(staticGroups, (val, item, array) -> val.split('='))
   # expand "user1,user2" to "@user1 @user2"
