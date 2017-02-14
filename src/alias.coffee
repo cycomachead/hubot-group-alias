@@ -53,7 +53,7 @@ getGroups = (robot, text) ->
         groupMap[group] = users
       matches = regex.exec(text)
     for own group, members of groupMap
-      list = _.map(members, userFromName)
+      list = _.map(members, userFromName(robot))
       list = _.map(list, mentionName)
       groupMap[group] = listToMentions(list)
     return groupMap
@@ -71,12 +71,15 @@ getGroupsList = (robot) ->
   else
     return Object.keys(buildGroupObject())
 
-userFromName = (name) ->
-  allUsers = robot.brain.data.users
-  for own id, user of allUsers
-    if user.name == name
-      return user
-  return {}
+# Returns a function that lets this be used inside _.map
+# TODO: This closure isn't totally necessary... bleh.
+userFromName = (robot) ->
+  return (name) ->
+    allUsers = robot.brain.data.users
+    for own id, user of allUsers
+      if user.name == name
+        return user
+    return {}
 
 mentionName = (user) ->
   # mention_name is for Hipchat
