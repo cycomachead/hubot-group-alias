@@ -82,8 +82,8 @@ const getGroupsList = function(robot) {
       users
     } = robot.brain.data;
     for (let id of Object.keys(users || {})) {
-      const user = users[id];
-      const roles = robot.auth.userRoles(user);
+      let user = users[id];
+      let roles = robot.auth.userRoles(user);
       groups = groups.concat(roles);
     }
     return _.uniq(groups);
@@ -105,21 +105,20 @@ var userFromName = robot => (function(name) {
   return {};
 });
 
-var mentionName = user => // mention_name is for Hipchat
-user[user_prop] || user.mention_name || user.name;
+var mentionName = user => user[user_prop] || user.mention_name || user.name;
 
 var listToMentions = list => '@' + list.join(' @');
 
 // Replace aliases with @mentions in the message
 const expand = function(message, groups, user) {
   const filterName = mentionName(user);
-  for (let alias of Object.keys(groups || {})) {
+  for (let alias of Object.keys(groups)) {
     // Filter inviduals from their own messages.
     let members = groups[alias];
     if (filterName) {
-      members = members.replace('@' + filterName, '').replace(/\s+/g, ' ');
+      members = members.replace(`@${filterName}`, '').replace(/\s+/g, ' ');
     }
-    const reg = new RegExp('[:(]+' + alias + '[:)]+|@' + alias, 'i');
+    const reg = new RegExp(`[:(]+${alias}[:)]+|@${alias}`, 'i');
     message = message.replace(reg, members);
   }
   return message;
@@ -134,9 +133,9 @@ const buildRegExp = function() {
     aliases = _.keys(buildGroupObject()).join('|');
   }
   // The last group is a set of stop conditions (word boundaries or end of line)
-  const atRE = '(?:@(' + aliases + ')(?:\\b[^.]|$))';
-  const emojiRE = '(?:[(:])(' + aliases + ')(?:[:)])';
-  return new RegExp(atRE + '|' + emojiRE, 'i');
+  const atRE = `(?:@(${aliases})(?:\\b[^.]|$))`;
+  const emojiRE = `(?:[(:])(${aliases})(?:[:)])`;
+  return new RegExp(`${atRE}|${emojiRE}`, 'i');
 };
 
 module.exports = function(robot) {
@@ -150,16 +149,16 @@ module.exports = function(robot) {
     return;
   }
 
-  robot.respond(/list groups?( alias(es)?)?/i, function(resp) {
+  robot.respond(/list groups?( alias(es)?)?/i, (resp) => {
     const groups = listToMentions(getGroupsList(robot));
-    return resp.send(`The currently setup groups are: ${groups}`);
+    resp.send(`The currently setup groups are: ${groups}`);
   });
 
   const regex = buildRegExp();
-  return robot.hear(regex, function(resp) {
+  robot.hear(regex, (resp) => {
     const groups = getGroups(robot, resp.message.text);
     if (!_.isEqual(groups, {})) { // don't send message if no groups found.
-      return resp.send(expand(resp.message.text, groups, resp.message.user));
+      resp.send(expand(resp.message.text, groups, resp.message.user));
     }
   });
 };
