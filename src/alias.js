@@ -43,7 +43,7 @@ const buildGroupObject = function() {
   staticGroups = _.map(staticGroups, (val, item, array) => [val[0],
     '@' + val[1].replace(/,/g, ' @')]);
   // Convert 2D list to native object
-  groupCache = _.object(staticGroups);
+  groupCache = _.fromPairs(staticGroups);
   return groupCache;
 };
 
