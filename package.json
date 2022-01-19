@@ -1,7 +1,7 @@
 {
   "name": "hubot-group-alias",
   "description": "Easy @mention groups aliases for your chatroom",
-  "version": "2.2.2",
+  "version": "2.5",
   "author": "Michael Ball <cycomachead@gmail.com>",
   "license": "MIT",
   "keywords": [
@@ -12,8 +12,7 @@
     "groups",
     "mentions",
     "emoji",
-    "slack",
-    "hipchat"
+    "slack"
   ],
   "repository": {
     "type": "git",
@@ -23,8 +22,7 @@
     "url": "https://github.com/cycomachead/hubot-group-alias/issues"
   },
   "dependencies": {
-    "coffee-script": "~1.6",
     "lodash": "~3.10.1"
   },
-  "main": "index.coffee"
+  "main": "index.js"
 }
